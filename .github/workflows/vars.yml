@@ -4,6 +4,7 @@ on:
 jobs:
   display-variables:
     name: ${{ vars.JOB_NAME }}
+    runs-on: ubuntu-latest
     # You can use configuration variables with the `vars` context for dynamic jobs
     environment: ${{ vars.ENVIRONMENT_STAGE }}
     steps:
