@@ -57,6 +57,8 @@ jobs:
           [[ $ACTION_GITHUB_SECRETS != "null" ]] && $( echo "$ACTION_GITHUB_SECRETS" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' )
           export HOSTS_ENV_FILE=actions_host.env
           printenv
+          pnpm --filter test1 env
+          cat actions_host.env
 
 
 

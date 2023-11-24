@@ -52,5 +52,6 @@ const envStr = Object.entries(env).map(([key, value]) => {
 console.log(envStr);
 
 if (env.HOSTS_ENV_FILE) {
+  console.log(env.HOSTS_ENV_FILE)
   writeFileSync(env.HOSTS_ENV_FILE, envStr);
 }
