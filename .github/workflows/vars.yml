@@ -16,10 +16,11 @@ jobs:
         echo "overridden variable : $OVERRIDE_VAR"
         echo "variable from shell environment : $env_var"
         printenv
-      # env:
-        # REPOSITORY_VAR: ${{ vars.REPOSITORY_VAR }}
-        # ORGANIZATION_VAR: ${{ vars.ORGANIZATION_VAR }}
-        # OVERRIDE_VAR: ${{ vars.OVERRIDE_VAR }}
+      env:
+        GITHUB_ENV: ${{ toJSON(vars) }}
+        REPOSITORY_VAR: ${{ vars.REPOSITORY_VAR }}
+        ORGANIZATION_VAR: ${{ vars.ORGANIZATION_VAR }}
+        OVERRIDE_VAR: ${{ vars.OVERRIDE_VAR }}
         
     - name: ${{ vars.HELLO_WORLD_STEP }}
       if: ${{ vars.HELLO_WORLD_ENABLED == 'true' }}
