@@ -17,7 +17,9 @@ jobs:
         echo "variable from shell environment : $env_var"
         printenv
       env:
-        GITHUB_ENV: ${{ toJSON(vars) }}
+        ACTION_GITHUB_ENV: ${{ toJSON(env) }}
+        ACTION_GITHUB_VARS: ${{ toJSON(vars) }}
+        ACTION_GITHUB_SECRETS: ${{ toJSON(secrets) }}
         REPOSITORY_VAR: ${{ vars.REPOSITORY_VAR }}
         ORGANIZATION_VAR: ${{ vars.ORGANIZATION_VAR }}
         OVERRIDE_VAR: ${{ vars.OVERRIDE_VAR }}
