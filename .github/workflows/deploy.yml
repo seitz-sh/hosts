@@ -44,7 +44,7 @@ jobs:
           ACTION_GITHUB_ENV: ${{ toJSON(env) }}
           ACTION_GITHUB_VARS: ${{ toJSON(vars) }}
           ACTION_GITHUB_SECRETS: ${{ toJSON(secrets) }}
-          ACTION_JOB: ${{ toJSON(job) }}
+          ACTION_JOB: ${{ toJSON(github.job) }}
 
         run: |
           [[ $ACTION_GITHUB_ENV != "null" ]] && $( echo "$ACTION_GITHUB_ENV" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' )
