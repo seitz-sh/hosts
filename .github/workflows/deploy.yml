@@ -44,8 +44,14 @@ jobs:
           ACTION_GITHUB_ENV: ${{ toJSON(env) }}
           ACTION_GITHUB_VARS: ${{ toJSON(vars) }}
           ACTION_GITHUB_SECRETS: ${{ toJSON(secrets) }}
+          ACTION_JOB: ${{ toJSON(job) }}
+
         run: |
           [[ $ACTION_GITHUB_ENV != "null" ]] && $( echo "$ACTION_GITHUB_ENV" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' )
           [[ $ACTION_GITHUB_VARS != "null" ]] && $( echo "$ACTION_GITHUB_VARS" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' )
           [[ $ACTION_GITHUB_SECRETS != "null" ]] && $( echo "$ACTION_GITHUB_SECRETS" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' )
+          export HOSTS_ENV_FILE=actions_host.env
           printenv
+
+
+
