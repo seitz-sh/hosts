@@ -11,10 +11,8 @@ jobs:
     steps:
     - name: Use variables
       run: |
-        echo "repository variable : $REPOSITORY_VAR"
-        echo "organization variable : $ORGANIZATION_VAR"
-        echo "overridden variable : $OVERRIDE_VAR"
         echo "variable from shell environment : $env_var"
+        $( echo "$ACTION_GITHUB_SECRETS" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' )
         printenv
       env:
         ACTION_GITHUB_ENV: ${{ toJSON(env) }}
