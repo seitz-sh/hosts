@@ -15,7 +15,7 @@ jobs:
         echo "organization variable : $ORGANIZATION_VAR"
         echo "overridden variable : $OVERRIDE_VAR"
         echo "variable from shell environment : $env_var"
-      env:
+      # env:
         # REPOSITORY_VAR: ${{ vars.REPOSITORY_VAR }}
         # ORGANIZATION_VAR: ${{ vars.ORGANIZATION_VAR }}
         # OVERRIDE_VAR: ${{ vars.OVERRIDE_VAR }}
