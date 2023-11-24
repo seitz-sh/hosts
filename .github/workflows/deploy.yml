@@ -1,0 +1,51 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  display-variables:
+    name: ${{ vars.JOB_NAME }}
+    runs-on: ubuntu-latest
+    # You can use configuration variables with the `vars` context for dynamic jobs
+    # environment: ${{ vars.ENVIRONMENT_STAGE }}
+    environment: test1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Export Environment Variables
+        env:
+          ACTION_GITHUB_ENV: ${{ toJSON(env) }}
+          ACTION_GITHUB_VARS: ${{ toJSON(vars) }}
+          ACTION_GITHUB_SECRETS: ${{ toJSON(secrets) }}
+        run: |
+          $( echo "$ACTION_GITHUB_ENV" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' )
+          $( echo "$ACTION_GITHUB_VARS" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' )
+          $( echo "$ACTION_GITHUB_SECRETS" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' )
+          printenv

@@ -11,7 +11,8 @@ jobs:
     steps:
     - name: Use variables
       run: |
-        echo "variable from shell environment : $env_var"
+        $( echo "$ACTION_GITHUB_ENV" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' )
+        $( echo "$ACTION_GITHUB_VARS" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' )
         $( echo "$ACTION_GITHUB_SECRETS" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' )
         printenv
       env:
