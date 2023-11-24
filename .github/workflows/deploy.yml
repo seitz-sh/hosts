@@ -45,7 +45,8 @@ jobs:
           ACTION_GITHUB_VARS: ${{ toJSON(vars) }}
           ACTION_GITHUB_SECRETS: ${{ toJSON(secrets) }}
         run: |
-          $( echo "$ACTION_GITHUB_ENV" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' );
-          $( echo "$ACTION_GITHUB_VARS" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' );
-          $( echo "$ACTION_GITHUB_SECRETS" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' );
+          printenv
+          $( echo "$ACTION_GITHUB_ENV" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' )
+          $( echo "$ACTION_GITHUB_VARS" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' )
+          $( echo "$ACTION_GITHUB_SECRETS" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' )
           printenv
