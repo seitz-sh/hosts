@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     # You can use configuration variables with the `vars` context for dynamic jobs
     environment: ${{ env.ENVIRONMENT_STAGE }}
-    environment: test1
+    # environment: test1
     steps:
       - name: Checkout
         uses: actions/checkout@v3
