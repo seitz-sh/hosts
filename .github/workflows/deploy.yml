@@ -55,10 +55,10 @@ jobs:
           [[ $ACTION_GITHUB_ENV != "null" ]] && $( echo "$ACTION_GITHUB_ENV" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' )
           [[ $ACTION_GITHUB_VARS != "null" ]] && $( echo "$ACTION_GITHUB_VARS" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' )
           [[ $ACTION_GITHUB_SECRETS != "null" ]] && $( echo "$ACTION_GITHUB_SECRETS" | jq -r 'keys[] as $k | "export \($k)=\(.[$k])"' )
-          export HOSTS_ENV_FILE=actions_host.env
+          export HOSTS_ENV_FILE="$(pwd)/actions_host.env"
           printenv
           pnpm run --filter 'dev-1' env
-          cat actions_host.env
+          cat $HOSTS_ENV_FILE
 
 
 
